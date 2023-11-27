@@ -85,7 +85,7 @@ function App() {
 
   const [barNum, setBarNum] = useState(4);
   const [beatsPerBar, setBeatsPerBar] = useState(4);
-  const [bpm] = useState(120);
+  const [bpm] = useState(95);
 
   const totalBeatNum = barNum * beatsPerBar;
 
@@ -116,7 +116,6 @@ function App() {
       <button onClick={() => setPlayBack(!playBack)}>
         {playBack ? "pause" : "play"}
       </button>
-      {playHeadPos}
     </div>
   );
 }
