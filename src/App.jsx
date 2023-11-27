@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Track from "./components/Track";
 import { calcBeatInterval } from "./utilities/bpm";
+import { nextPlayHeadPos } from "./utilities/playHead";
 
 const sequencerData = [
   {
@@ -76,14 +77,15 @@ const sequencerData = [
 ];
 
 function App() {
-  const [beat, setBeat] = useState(0);
   const [playBack, setPlayBack] = useState(false);
+  const [playHeadPos, setPlayHeadPos] = useState(0);
   const playHeadInterval = useRef();
 
+  const [barNum, setBarNum] = useState(4);
+  const [beatsPerBar, setBeatsPerBar] = useState(4);
   const [bpm] = useState(120);
 
-  // const barNum = 4;
-  // const beatsPerBar = 4;
+  const totalBeatNum = barNum * beatsPerBar;
 
   useEffect(() => {
     // clear any previous intervals while live-editing...
@@ -93,8 +95,9 @@ function App() {
   useEffect(() => {
     if (playBack) {
       playHeadInterval.current = setInterval(() => {
-        setBeat((beat) => beat + 1);
-        console.log("Date.now()", Date.now());
+        setPlayHeadPos((playHeadPos) =>
+          nextPlayHeadPos(playHeadPos, totalBeatNum),
+        );
       }, calcBeatInterval(bpm));
     } else clearInterval(playHeadInterval.current);
   }, [playBack]);
@@ -112,7 +115,7 @@ function App() {
       <button onClick={() => setPlayBack(!playBack)}>
         {playBack ? "pause" : "play"}
       </button>
-      {beat}
+      {playHeadPos}
     </div>
   );
 }
