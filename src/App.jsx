@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Track from "./components/Track";
 
@@ -76,24 +76,41 @@ const sequencerData = [
 
 function App() {
   const [beat, setBeat] = useState(0);
-  const [playBack, setPlayBack] = useState(false)
+  const [playBack, setPlayBack] = useState(false);
+  const playHeadInterval = useRef();
 
   const barNum = 4;
   const beatsPerBar = 4;
-  const bpm = 120;
+  const bpm = 240;
+
+  useEffect(() => {
+    // clear any previous intervals while live-editing...
+    return () => clearInterval(playHeadInterval.current);
+  }, []);
+
+  useEffect(() => {
+    if (playBack) {
+      playHeadInterval.current = setInterval(() => {
+        setBeat((beat) => beat + 1);
+        console.log("Date.now()", Date.now());
+      }, 1000);
+    } else clearInterval(playHeadInterval.current);
+  }, [playBack]);
 
   return (
     <div>
-
-    <div>
-      {sequencerData.map((track) => (
-        <div key={`track-${track.trackName}`}>
-          {track.trackName}
-          <Track track={track} />
-        </div>
-      ))}
-    </div>
-    <button onClick={() => setPlayBack(!playBack)}>{playBack ? "pause" : "play"}</button>
+      <div>
+        {sequencerData.map((track) => (
+          <div key={`track-${track.trackName}`}>
+            {track.trackName}
+            <Track track={track} />
+          </div>
+        ))}
+      </div>
+      <button onClick={() => setPlayBack(!playBack)}>
+        {playBack ? "pause" : "play"}
+      </button>
+      {beat}
     </div>
   );
 }
