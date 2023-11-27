@@ -79,9 +79,9 @@ function App() {
   const [playBack, setPlayBack] = useState(false);
   const playHeadInterval = useRef();
 
-  const barNum = 4;
-  const beatsPerBar = 4;
-  const bpm = 240;
+  // const barNum = 4;
+  // const beatsPerBar = 4;
+  // const bpm = 240;
 
   useEffect(() => {
     // clear any previous intervals while live-editing...
