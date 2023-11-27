@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import "./App.css";
 import Track from "./components/Track";
 import { calcBeatInterval } from "./utilities/bpm";
 import { nextPlayHeadPos } from "./utilities/playHead";
+
+const PlayHeadContext = createContext(0);
 
 const sequencerData = [
   {
@@ -104,14 +106,16 @@ function App() {
 
   return (
     <div>
-      <div>
-        {sequencerData.map((track) => (
-          <div key={`track-${track.trackName}`}>
-            {track.trackName}
-            <Track track={track} />
-          </div>
-        ))}
-      </div>
+      <PlayHeadContext.Provider value={playHeadPos}>
+        <div>
+          {sequencerData.map((track) => (
+            <div key={`track-${track.trackName}`}>
+              {track.trackName}
+              <Track track={track} />
+            </div>
+          ))}
+        </div>
+      </PlayHeadContext.Provider>
       <button onClick={() => setPlayBack(!playBack)}>
         {playBack ? "pause" : "play"}
       </button>
@@ -120,4 +124,4 @@ function App() {
   );
 }
 
-export default App;
+export { App, PlayHeadContext };
