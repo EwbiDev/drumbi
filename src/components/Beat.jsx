@@ -12,10 +12,9 @@ export default function Beat({ beat }) {
 
   useEffect(() => {
     if (!audioRef.current) {
-      const audioContext = new AudioContext();
       const sample = new Audio(kick);
 
-      audioRef.current = { audioContext, sample };
+      audioRef.current = { sample };
     }
 
     if (displayPlayHead && beat.hit) {
