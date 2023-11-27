@@ -109,10 +109,7 @@ function App() {
       <PlayHeadContext.Provider value={playHeadPos}>
         <div>
           {sequencerData.map((track) => (
-            <div key={`track-${track.trackName}`}>
-              {track.trackName}
-              <Track track={track} />
-            </div>
+            <Track key={`track-${track.trackName}`} track={track} />
           ))}
         </div>
       </PlayHeadContext.Provider>
