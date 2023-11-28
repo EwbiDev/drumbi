@@ -2,7 +2,6 @@ import { useContext, useEffect, useRef } from "react";
 import { PlayHeadContext } from "../App";
 
 import kick from "../assets/audio/kick.wav";
-import { playSound } from "../utilities/audio";
 
 export default function Beat({ beat }) {
   const playHeadPos = useContext(PlayHeadContext);
