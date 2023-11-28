@@ -4,6 +4,7 @@ import Track from "./components/Track";
 import { calcBeatInterval } from "@utilities/bpm";
 import { nextPlayHeadPos } from "@utilities/playHead";
 import { trackScaffold } from "@utilities/audio";
+import PlayBackControls from "./components/PlayBackControls";
 
 const PlayContext = createContext(0);
 
@@ -24,7 +25,7 @@ function App() {
 
   const [barNum, setBarNum] = useState(4);
   const [beatsPerBar, setBeatsPerBar] = useState(4);
-  const [bpm] = useState(180);
+  const [bpm, setBpm] = useState(180);
 
   const totalBeatNum = barNum * beatsPerBar;
 
@@ -34,14 +35,15 @@ function App() {
   }, []);
 
   useEffect(() => {
+    clearInterval(playHeadInterval.current);
     if (playBack) {
       playHeadInterval.current = setInterval(() => {
         setPlayHeadPos((playHeadPos) =>
           nextPlayHeadPos(playHeadPos, totalBeatNum),
         );
       }, calcBeatInterval(bpm));
-    } else clearInterval(playHeadInterval.current);
-  }, [playBack]);
+    }
+  }, [playBack, bpm]);
 
   useEffect(() => {
     localStorage.setItem("sequencerData", JSON.stringify(sequencerData));
@@ -49,6 +51,12 @@ function App() {
 
   return (
     <div>
+      <PlayBackControls
+        bpm={bpm}
+        setBpm={setBpm}
+        playBack={playBack}
+        setPlayBack={setPlayBack}
+      />
       <PlayContext.Provider
         value={{ playBack, playHeadPos, sequencerData, setSequencerData }}
       >
@@ -58,9 +66,6 @@ function App() {
           ))}
         </div>
       </PlayContext.Provider>
-      <button onClick={() => setPlayBack(!playBack)}>
-        {playBack ? "pause" : "play"}
-      </button>
     </div>
   );
 }
