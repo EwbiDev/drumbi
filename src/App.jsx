@@ -1,8 +1,8 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import "./App.css";
 import Track from "./components/Track";
-import { calcBeatInterval } from "./utilities/bpm";
-import { nextPlayHeadPos } from "./utilities/playHead";
+import { calcBeatInterval } from "@utilities/bpm";
+import { nextPlayHeadPos } from "@utilities/playHead";
 
 const PlayContext = createContext(0);
 
