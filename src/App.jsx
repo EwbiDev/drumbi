@@ -3,6 +3,7 @@ import "./App.css";
 import Track from "./components/Track";
 import { calcBeatInterval } from "@utilities/bpm";
 import { nextPlayHeadPos } from "@utilities/playHead";
+import { trackScaffold } from "@utilities/audio";
 
 const PlayContext = createContext(0);
 
@@ -80,7 +81,7 @@ const INITIAL_SEQUENCER_DATA = [
 ];
 
 function App() {
-  const [sequencerData, setSequencerData] = useState(INITIAL_SEQUENCER_DATA);
+  const [sequencerData, setSequencerData] = useState(trackScaffold(4, 4));
 
   const [playBack, setPlayBack] = useState(false);
   const [playHeadPos, setPlayHeadPos] = useState(0);

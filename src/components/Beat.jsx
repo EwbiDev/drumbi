@@ -7,7 +7,7 @@ import { beatProp, trackIdProp } from "@utilities/propTypes";
 export default function Beat({ beat, trackId }) {
   const { playBack, playHeadPos, sequencerData, setSequencerData } =
     useContext(PlayContext);
-  const displayPlayHead = playHeadPos === beat.beatNum;
+  const displayPlayHead = playHeadPos === beat.beatId;
 
   const audioRef = useRef(null);
 
@@ -24,7 +24,7 @@ export default function Beat({ beat, trackId }) {
   }, [displayPlayHead, playBack]);
 
   function handleChange(e) {
-    sequencerData[trackId].beats[beat.beatNum].hit = e.target.checked;
+    sequencerData[trackId].beats[beat.beatId].hit = e.target.checked;
     setSequencerData([...sequencerData]);
   }
 
