@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import { PlayContext } from "../App";
 
 import kick from "@assets/audio/kick.wav";
+import { beatProp } from "@utilities/propTypes";
 
 export default function Beat({ beat }) {
   const { playBack, playHeadPos } = useContext(PlayContext);
@@ -29,3 +30,7 @@ export default function Beat({ beat }) {
     </label>
   );
 }
+
+Beat.propTypes = {
+  beat: beatProp,
+};
