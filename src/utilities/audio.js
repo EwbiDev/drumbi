@@ -1,4 +1,6 @@
 import kickFile from "@assets/audio/kick.wav";
+import snareFile from "@assets/audio/snare.wav";
+import hiHatClosed from "@assets/audio/hiHatClosed.wav";
 
 async function playSound(context, url, startTime) {
   try {
@@ -40,14 +42,26 @@ function trackScaffold(barNum, beatsPerBar) {
 
   const scaffold = [
     {
-      beats: buildBeatArray(barNum, beatsPerBar),
-      trackId: 0,
+      trackName: "hi hat",
+      defaultFile: hiHatClosed,
+    },
+    {
+      trackName: "snare",
+      defaultFile: snareFile,
+    },
+    {
       trackName: "kick",
       defaultFile: kickFile,
     },
   ];
 
-  return scaffold;
+  return scaffold.map((item, idx) => {
+    return {
+      ...item,
+      beats: buildBeatArray(barNum, beatsPerBar),
+      trackId: idx,
+    };
+  });
 }
 
 export { playSound, trackScaffold };
