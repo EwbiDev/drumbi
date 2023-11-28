@@ -4,7 +4,7 @@ import Track from "./components/Track";
 import { calcBeatInterval } from "./utilities/bpm";
 import { nextPlayHeadPos } from "./utilities/playHead";
 
-const PlayHeadContext = createContext(0);
+const PlayContext = createContext(0);
 
 const sequencerData = [
   {
@@ -106,13 +106,13 @@ function App() {
 
   return (
     <div>
-      <PlayHeadContext.Provider value={playHeadPos}>
+      <PlayContext.Provider value={{ playBack, playHeadPos }}>
         <div>
           {sequencerData.map((track) => (
             <Track key={`track-${track.trackName}`} track={track} />
           ))}
         </div>
-      </PlayHeadContext.Provider>
+      </PlayContext.Provider>
       <button onClick={() => setPlayBack(!playBack)}>
         {playBack ? "pause" : "play"}
       </button>
@@ -120,4 +120,4 @@ function App() {
   );
 }
 
-export { App, PlayHeadContext };
+export { App, PlayContext };

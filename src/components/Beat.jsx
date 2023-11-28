@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
-import { PlayHeadContext } from "../App";
+import { PlayContext } from "../App";
 
 import kick from "../assets/audio/kick.wav";
 
 export default function Beat({ beat }) {
-  const playHeadPos = useContext(PlayHeadContext);
+  const { playBack, playHeadPos } = useContext(PlayContext);
   const displayPlayHead = playHeadPos === beat.beatNum;
 
   const audioRef = useRef(null);
@@ -16,10 +16,10 @@ export default function Beat({ beat }) {
       audioRef.current = { sample };
     }
 
-    if (displayPlayHead && beat.hit) {
+    if (displayPlayHead && beat.hit && playBack) {
       audioRef.current.sample.play();
     }
-  }, [displayPlayHead]);
+  }, [displayPlayHead, playBack]);
 
   return (
     <label
