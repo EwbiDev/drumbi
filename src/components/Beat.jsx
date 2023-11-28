@@ -22,11 +22,13 @@ export default function Beat({ beat }) {
     }
   }, [displayPlayHead, playBack]);
 
+  function handleClick() {}
+
   return (
     <label
       className={`p-4 ${displayPlayHead ? "bg-green-300" : "bg-slate-400"} `}
     >
-      <input type="checkbox" defaultChecked={beat.hit} />
+      <input onClick={handleClick} type="checkbox" defaultChecked={beat.hit} />
     </label>
   );
 }
