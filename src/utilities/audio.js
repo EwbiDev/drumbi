@@ -26,13 +26,28 @@ async function playSound(context, url, startTime) {
   }
 }
 
-const trackScaffold = [
-  {
-    beats: [],
-    trackId: 0,
-    trackName: "kick",
-    defaultFile: kickFile,
-  },
-];
+function trackScaffold(barNum, beatsPerBar) {
+  function buildBeatArray(barNum, beatsPerBar) {
+    const beatArray = [];
+
+    for (let i = 0; i < barNum * beatsPerBar; i++) {
+      const beat = { beatId: i, hit: false };
+      beatArray.push(beat);
+    }
+
+    return beatArray;
+  }
+
+  const scaffold = [
+    {
+      beats: buildBeatArray(barNum, beatsPerBar),
+      trackId: 0,
+      trackName: "kick",
+      defaultFile: kickFile,
+    },
+  ];
+
+  return scaffold;
+}
 
 export { playSound, trackScaffold };
