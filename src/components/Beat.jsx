@@ -2,10 +2,11 @@ import { useContext, useEffect, useRef } from "react";
 import { PlayContext } from "../App";
 
 import kick from "@assets/audio/kick.wav";
-import { beatProp } from "@utilities/propTypes";
+import { beatProp, trackIdProp } from "@utilities/propTypes";
 
-export default function Beat({ beat }) {
-  const { playBack, playHeadPos } = useContext(PlayContext);
+export default function Beat({ beat, trackId }) {
+  const { playBack, playHeadPos, sequencerData, setSequencerData } =
+    useContext(PlayContext);
   const displayPlayHead = playHeadPos === beat.beatNum;
 
   const audioRef = useRef(null);
@@ -22,13 +23,16 @@ export default function Beat({ beat }) {
     }
   }, [displayPlayHead, playBack]);
 
-  function handleClick() {}
+  function handleChange(e) {
+    sequencerData[trackId].beats[beat.beatNum].hit = e.target.checked;
+    setSequencerData([...sequencerData]);
+  }
 
   return (
     <label
       className={`p-4 ${displayPlayHead ? "bg-green-300" : "bg-slate-400"} `}
     >
-      <input onClick={handleClick} type="checkbox" defaultChecked={beat.hit} />
+      <input onChange={handleChange} type="checkbox" checked={beat.hit} />
     </label>
   );
 }

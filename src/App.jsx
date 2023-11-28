@@ -6,8 +6,9 @@ import { nextPlayHeadPos } from "@utilities/playHead";
 
 const PlayContext = createContext(0);
 
-const sequencerData = [
+const INITIAL_SEQUENCER_DATA = [
   {
+    trackId: 0,
     trackName: "kick",
     beats: [
       {
@@ -79,13 +80,15 @@ const sequencerData = [
 ];
 
 function App() {
+  const [sequencerData, setSequencerData] = useState(INITIAL_SEQUENCER_DATA);
+
   const [playBack, setPlayBack] = useState(false);
   const [playHeadPos, setPlayHeadPos] = useState(0);
   const playHeadInterval = useRef();
 
   const [barNum, setBarNum] = useState(4);
   const [beatsPerBar, setBeatsPerBar] = useState(4);
-  const [bpm] = useState(95);
+  const [bpm] = useState(180);
 
   const totalBeatNum = barNum * beatsPerBar;
 
@@ -106,7 +109,9 @@ function App() {
 
   return (
     <div>
-      <PlayContext.Provider value={{ playBack, playHeadPos }}>
+      <PlayContext.Provider
+        value={{ playBack, playHeadPos, sequencerData, setSequencerData }}
+      >
         <div>
           {sequencerData.map((track) => (
             <Track key={`track-${track.trackName}`} track={track} />

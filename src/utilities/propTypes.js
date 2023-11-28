@@ -5,4 +5,6 @@ const beatProp = PropTypes.shape({
   hit: PropTypes.bool.isRequired,
 });
 
-export { beatProp };
+const trackIdProp = PropTypes.number;
+
+export { beatProp, trackIdProp };
