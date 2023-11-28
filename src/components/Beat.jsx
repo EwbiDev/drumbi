@@ -1,10 +1,9 @@
 import { useContext, useEffect, useRef } from "react";
 import { PlayContext } from "../App";
 
-import kick from "@assets/audio/kick.wav";
 import { beatProp, trackIdProp } from "@utilities/propTypes";
 
-export default function Beat({ beat, trackId }) {
+export default function Beat({ beat, defaultFile, trackId }) {
   const { playBack, playHeadPos, sequencerData, setSequencerData } =
     useContext(PlayContext);
   const displayPlayHead = playHeadPos === beat.beatId;
@@ -13,7 +12,7 @@ export default function Beat({ beat, trackId }) {
 
   useEffect(() => {
     if (!audioRef.current) {
-      const sample = new Audio(kick);
+      const sample = new Audio(defaultFile);
 
       audioRef.current = { sample };
     }
