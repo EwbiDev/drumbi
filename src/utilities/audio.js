@@ -1,3 +1,5 @@
+import kickFile from "@assets/audio/kick.wav";
+
 async function playSound(context, url, startTime) {
   try {
     const response = await fetch(url);
@@ -24,4 +26,13 @@ async function playSound(context, url, startTime) {
   }
 }
 
-export { playSound };
+const trackScaffold = [
+  {
+    beats: [],
+    trackId: 0,
+    trackName: "kick",
+    defaultFile: kickFile,
+  },
+];
+
+export { playSound, trackScaffold };
