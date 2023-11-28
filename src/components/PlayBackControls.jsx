@@ -4,6 +4,13 @@ export default function PlayBackControls({
   bpm,
   setBpm,
 }) {
+  function handleBpmChange(e) {
+    // TODO: input needs to be more flexible, perhaps minBpm && maxBpm variables. If bpm outside default to last valid bpm?
+    const newValue = e.target.value;
+    if (newValue > 30 && newValue < 480) {
+      setBpm(newValue);
+    }
+  }
   return (
     <div className="flex gap-4">
       <button onClick={() => setPlayBack(!playBack)}>
@@ -12,7 +19,7 @@ export default function PlayBackControls({
       <label>
         BPM
         <input
-          onChange={(e) => setBpm(e.target.value)}
+          onChange={handleBpmChange}
           type="number"
           max={480}
           min={1}
