@@ -7,8 +7,16 @@ import { trackScaffold } from "@utilities/audio";
 
 const PlayContext = createContext(0);
 
+function loadData() {
+  const savedSequencerData = localStorage.getItem("sequencerData");
+  if (savedSequencerData) {
+    return JSON.parse(savedSequencerData);
+  }
+  return trackScaffold(4, 4);
+}
+
 function App() {
-  const [sequencerData, setSequencerData] = useState(trackScaffold(4, 4));
+  const [sequencerData, setSequencerData] = useState(loadData());
 
   const [playBack, setPlayBack] = useState(false);
   const [playHeadPos, setPlayHeadPos] = useState(0);
@@ -34,6 +42,10 @@ function App() {
       }, calcBeatInterval(bpm));
     } else clearInterval(playHeadInterval.current);
   }, [playBack]);
+
+  useEffect(() => {
+    localStorage.setItem("sequencerData", JSON.stringify(sequencerData));
+  }, [sequencerData]);
 
   return (
     <div>
