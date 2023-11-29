@@ -50,22 +50,24 @@ function App() {
   }, [sequencerData]);
 
   return (
-    <div className="container mx-auto flex flex-col items-center">
-      <PlayBackControls
-        bpm={bpm}
-        setBpm={setBpm}
-        playBack={playBack}
-        setPlayBack={setPlayBack}
-      />
-      <PlayContext.Provider
-        value={{ playBack, playHeadPos, sequencerData, setSequencerData }}
-      >
-        <div>
-          {sequencerData.map((track) => (
-            <Track key={`track-${track.trackName}`} track={track} />
-          ))}
-        </div>
-      </PlayContext.Provider>
+    <div className="flex h-screen w-screen items-center justify-center">
+      <main className="container flex h-min flex-col items-center gap-4 rounded-xl bg-slate-700 p-8">
+        <PlayBackControls
+          bpm={bpm}
+          setBpm={setBpm}
+          playBack={playBack}
+          setPlayBack={setPlayBack}
+        />
+        <PlayContext.Provider
+          value={{ playBack, playHeadPos, sequencerData, setSequencerData }}
+        >
+          <div className="rounded-xl bg-cyan-900 p-4">
+            {sequencerData.map((track) => (
+              <Track key={`track-${track.trackName}`} track={track} />
+            ))}
+          </div>
+        </PlayContext.Provider>
+      </main>
     </div>
   );
 }

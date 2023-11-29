@@ -29,11 +29,20 @@ export default function Beat({ beat, defaultFile, trackId }) {
   }
 
   return (
-    <label
-      className={`p-4 ${displayPlayHead ? "bg-green-300" : "bg-slate-400"} `}
-    >
-      <input onChange={handleChange} type="checkbox" checked={beat.hit} />
-    </label>
+    <div className={`p-1 ${displayPlayHead ? "bg-green-300" : "bg-slate-400"}`}>
+      <label
+        className={`border border-dashed border-transparent p-1 px-3 hover:border hover:border-white ${
+          beat.hit && "bg-white"
+        } `}
+      >
+        <input
+          className=" hidden"
+          onChange={handleChange}
+          type="checkbox"
+          checked={beat.hit}
+        />
+      </label>
+    </div>
   );
 }
 

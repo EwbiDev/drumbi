@@ -14,13 +14,19 @@ export default function PlayBackControls({
     }
   }
   return (
-    <div className="flex gap-4">
-      <button onClick={() => setPlayBack(!playBack)}>
+    <div className="flex items-center gap-4">
+      <button
+        className={` w-16 rounded-xl py-2 hover:text-white ${
+          playBack ? "bg-red-300" : "bg-green-300"
+        }`}
+        onClick={() => setPlayBack(!playBack)}
+      >
         {playBack ? "pause" : "play"}
       </button>
-      <label>
+      <label className="flex items-center gap-2 rounded-xl bg-slate-500 pl-2 text-white">
         BPM
         <input
+          className=" rounded-xl bg-slate-400 p-2"
           onChange={handleBpmChange}
           type="number"
           max={480}
