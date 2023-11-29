@@ -6,6 +6,8 @@ import { nextPlayHeadPos } from "@utilities/playHead";
 import { trackScaffold } from "@utilities/audio";
 import PlayBackControls from "./components/PlayBackControls";
 
+import { getAudioCtx } from "@utilities/audioContext";
+
 const PlayContext = createContext(0);
 
 function loadData() {
@@ -28,6 +30,13 @@ function App() {
   const [bpm, setBpm] = useState(180);
 
   const totalBeatNum = barNum * beatsPerBar;
+
+  useEffect(() => {
+    if (playBack) {
+      const audioCtx = getAudioCtx();
+      console.log("audioCtx", audioCtx);
+    }
+  }, [playBack]);
 
   useEffect(() => {
     // clear any previous intervals while live-editing...
