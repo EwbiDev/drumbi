@@ -9,7 +9,7 @@ let startTime = null;
 
 let nextNoteTime = null;
 
-const sequencerTimeLength = 0.395;
+const sequencerTimeLength = 0.4085;
 const sequencerQueue = [
   {
     time: 0,
@@ -53,17 +53,18 @@ async function scheduleNote(time) {
 }
 
 function setNextNote() {
-  sequencerQueueIndex = (sequencerQueueIndex + 1) % sequencerQueue.length;
+  const curQIdx = sequencerQueueIndex;
+  const nextQIdx = (sequencerQueueIndex =
+    (sequencerQueueIndex + 1) % sequencerQueue.length);
 
-  const prevTime =
-    sequencerQueue[
-      (sequencerQueueIndex + sequencerQueue.length - 1) % sequencerQueue.length
-    ].time;
-  const nextTime = sequencerQueue[sequencerQueueIndex].time;
+  const prevTime = sequencerQueue[curQIdx].time;
+  const nextTime = sequencerQueue[nextQIdx].time;
 
-  nextNoteTime += nextTime
-    ? nextTime - prevTime
-    : sequencerTimeLength - prevTime;
+  if (nextQIdx === 0) {
+    nextNoteTime += sequencerTimeLength - prevTime;
+  } else {
+    nextNoteTime += nextTime - prevTime;
+  }
 }
 
 function setStartTime() {
