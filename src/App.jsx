@@ -50,7 +50,7 @@ function App() {
   }, [sequencerData]);
 
   return (
-    <div>
+    <div className="container mx-auto flex flex-col items-center">
       <PlayBackControls
         bpm={bpm}
         setBpm={setBpm}
