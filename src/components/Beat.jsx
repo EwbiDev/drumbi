@@ -23,6 +23,7 @@ export default function Beat({ beat, defaultFile, trackId }) {
   }, [displayPlayHead, playBack]);
 
   function handleChange(e) {
+    if (!beat.hit) audioRef.current.sample.play();
     sequencerData[trackId].beats[beat.beatId].hit = e.target.checked;
     setSequencerData([...sequencerData]);
   }
