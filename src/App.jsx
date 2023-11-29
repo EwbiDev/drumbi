@@ -44,17 +44,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    clearInterval(playHeadInterval.current);
-    if (playBack) {
-      playHeadInterval.current = setInterval(() => {
-        setPlayHeadPos((playHeadPos) =>
-          nextPlayHeadPos(playHeadPos, totalBeatNum),
-        );
-      }, calcBeatInterval(bpm));
-    }
-  }, [playBack, bpm]);
-
-  useEffect(() => {
     localStorage.setItem("sequencerData", JSON.stringify(sequencerData));
   }, [sequencerData]);
 
