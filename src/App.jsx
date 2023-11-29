@@ -7,6 +7,10 @@ import { trackScaffold } from "@utilities/audio";
 import PlayBackControls from "./components/PlayBackControls";
 
 import { getAudioCtx } from "@utilities/audioContext";
+import {
+  startSchedulerInterval,
+  stopSchedulerInterval,
+} from "@utilities/schedulerInterval";
 
 const PlayContext = createContext(0);
 
@@ -22,7 +26,7 @@ function App() {
   const [sequencerData, setSequencerData] = useState(loadData());
 
   const [playBack, setPlayBack] = useState(false);
-  const [playHeadPos, setPlayHeadPos] = useState(0);
+  const [playHeadPos, setPlayHeadPos] = useState(3);
   const playHeadInterval = useRef();
 
   const [barNum, setBarNum] = useState(4);
@@ -34,7 +38,9 @@ function App() {
   useEffect(() => {
     if (playBack) {
       const audioCtx = getAudioCtx();
-      console.log("audioCtx", audioCtx);
+      startSchedulerInterval();
+    } else {
+      stopSchedulerInterval();
     }
   }, [playBack]);
 
