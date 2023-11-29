@@ -1,9 +1,11 @@
-const interval = 25;
+import { scheduler } from "./scheduler";
+
+const interval = 25; // milliseconds
 
 let intervalId = null;
 
 function startSchedulerInterval() {
-  intervalId = setInterval(() => console.log(Date.now()), interval);
+  intervalId = setInterval(scheduler, interval);
 }
 
 function stopSchedulerInterval() {
