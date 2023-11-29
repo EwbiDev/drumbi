@@ -7,25 +7,25 @@ let kickBuffer = null;
 
 let startTime = null;
 
-let lastNoteTime = 0;
+let nextNoteTime = null;
 
+const sequencerTimeLength = 0.395;
 const sequencerQueue = [
   {
     time: 0,
   },
   {
-    time: 0.25,
+    time: sequencerTimeLength / 6,
   },
   {
-    time: 0.5,
+    time: sequencerTimeLength / 3,
   },
   {
-    time: 0.75,
+    time: (sequencerTimeLength / 3) * 2,
   },
 ];
 let sequencerQueueIndex = 0;
 
-const sequencerTimeLength = 2;
 let sequencerIterations = 0;
 
 async function loadBuffer() {
@@ -40,14 +40,8 @@ function scheduler() {
   loadBuffer();
   setStartTime();
 
-  const nextNote = sequencerQueue[sequencerQueueIndex];
-
-  const newTime = calcScheduledTime(nextNote.time);
-
-  console.log("newTime", newTime);
-
-  while (lastNoteTime < audioCtx.currentTime + lookahead) {
-    scheduleNote(newTime);
+  while (nextNoteTime < audioCtx.currentTime + lookahead) {
+    scheduleNote(nextNoteTime);
     setNextNote();
   }
 }
@@ -58,18 +52,29 @@ async function scheduleNote(time) {
   source.connect(audioCtx.destination);
 
   source.start(time);
-
-  setLastNoteTime(time);
 }
 
 function setNextNote() {
+  const isLastNote = sequencerQueueIndex === sequencerQueue.length - 1;
+  if (isLastNote) {
+    sequencerIterations++;
+  }
   sequencerQueueIndex = (sequencerQueueIndex + 1) % sequencerQueue.length;
-  if (sequencerQueueIndex === 0) sequencerIterations++;
+
+  const prevTime =
+    sequencerQueue[
+      (sequencerQueueIndex + sequencerQueue.length - 1) % sequencerQueue.length
+    ].time;
+  const nextTime = sequencerQueue[sequencerQueueIndex].time;
+
+  nextNoteTime += nextTime
+    ? nextTime - prevTime
+    : sequencerTimeLength - prevTime;
 }
 
 function setStartTime() {
   if (!startTime) {
-    startTime = audioCtx.currentTime + 0.1;
+    nextNoteTime = startTime = audioCtx.currentTime + 0.1;
   }
 }
 
@@ -80,14 +85,6 @@ function clearStartTime() {
 function clearSequencer() {
   sequencerIterations = 0;
   sequencerQueueIndex = 0;
-}
-
-function setLastNoteTime(time) {
-  lastNoteTime = time;
-}
-
-function calcScheduledTime(noteTime) {
-  return noteTime + sequencerTimeLength * sequencerIterations + startTime;
 }
 
 function clearScheduler() {
