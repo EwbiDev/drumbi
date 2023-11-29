@@ -1,8 +1,9 @@
 import { getAudioCtx } from "./audioContext";
 import kickPath from "@assets/audio/kick.wav";
 
+let audioCtx; // context must be generated after user action
+
 const lookahead = 0.1;
-const audioCtx = getAudioCtx();
 let kickBuffer = null;
 
 let startTime = null;
@@ -37,6 +38,7 @@ async function loadBuffer() {
 }
 
 function scheduler() {
+  audioCtx = getAudioCtx();
   loadBuffer();
   setStartTime();
 
