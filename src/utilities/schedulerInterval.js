@@ -1,4 +1,4 @@
-import { scheduler } from "./scheduler";
+import { clearScheduler, scheduler } from "./scheduler";
 
 const interval = 25; // milliseconds
 
@@ -10,6 +10,7 @@ function startSchedulerInterval() {
 
 function stopSchedulerInterval() {
   clearInterval(intervalId);
+  clearScheduler();
 }
 
 export { startSchedulerInterval, stopSchedulerInterval };
