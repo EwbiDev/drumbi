@@ -37,7 +37,6 @@ function App() {
 
   useEffect(() => {
     if (playBack) {
-      const audioCtx = getAudioCtx();
       startSchedulerInterval();
     } else {
       stopSchedulerInterval();
