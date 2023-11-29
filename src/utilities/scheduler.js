@@ -13,6 +13,7 @@ const sequencerTimeLength = 0.4085;
 const sequencerQueue = [
   {
     time: 0,
+    path: "", // TODO: set paths in queue
   },
   {
     time: sequencerTimeLength / 6,
@@ -27,6 +28,7 @@ const sequencerQueue = [
 let sequencerQueueIndex = 0;
 
 async function loadBuffer() {
+  // TODO: to parametrize
   if (!kickBuffer) {
     const response = await fetch(kickPath);
     const audioData = await response.arrayBuffer();
