@@ -26,8 +26,6 @@ const sequencerQueue = [
 ];
 let sequencerQueueIndex = 0;
 
-let sequencerIterations = 0;
-
 async function loadBuffer() {
   if (!kickBuffer) {
     const response = await fetch(kickPath);
@@ -55,10 +53,6 @@ async function scheduleNote(time) {
 }
 
 function setNextNote() {
-  const isLastNote = sequencerQueueIndex === sequencerQueue.length - 1;
-  if (isLastNote) {
-    sequencerIterations++;
-  }
   sequencerQueueIndex = (sequencerQueueIndex + 1) % sequencerQueue.length;
 
   const prevTime =
@@ -83,7 +77,6 @@ function clearStartTime() {
 }
 
 function clearSequencer() {
-  sequencerIterations = 0;
   sequencerQueueIndex = 0;
 }
 
