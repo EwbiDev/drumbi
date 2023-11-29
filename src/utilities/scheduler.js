@@ -73,7 +73,7 @@ function setNextNote() {
 
 function setStartTime() {
   if (!startTime) {
-    nextNoteTime = startTime = audioCtx.currentTime + 0.1;
+    nextNoteTime = startTime = audioCtx.currentTime + lookahead;
   }
 }
 
