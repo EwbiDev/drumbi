@@ -7,8 +7,10 @@ export default function PlayBackControls({
   function handleBpmChange(e) {
     // TODO: input needs to be more flexible, perhaps minBpm && maxBpm variables. If bpm outside default to last valid bpm?
     const newValue = e.target.value;
-    if (newValue > 30 && newValue < 480) {
+    if (newValue > 0) {
       setBpm(newValue);
+    } else {
+      setBpm(1);
     }
   }
   return (
