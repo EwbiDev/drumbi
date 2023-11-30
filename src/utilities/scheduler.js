@@ -66,12 +66,17 @@ const sequencerQueue = [
     audio: "hiHatClosed",
   },
   {
-    time: (t / 16) * 6,
+    time: (t / 48) * 18,
 
     audio: "hiHatClosed",
   },
   {
-    time: (t / 16) * 7,
+    time: (t / 48) * 20,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 48) * 22,
 
     audio: "hiHatClosed",
   },
@@ -123,7 +128,42 @@ const sequencerQueue = [
     audio: "kick",
   },
   {
-    time: (t / 16) * 14,
+    time: (t / 128) * 112,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 128) * 113,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 128) * 114,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 128) * 115,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 128) * 116,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 128) * 117,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 128) * 118,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 128) * 119,
 
     audio: "hiHatClosed",
   },
