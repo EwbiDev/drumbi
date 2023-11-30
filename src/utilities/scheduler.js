@@ -5,6 +5,7 @@ import snarePath from "@assets/audio/snare.wav";
 import hiHatClosedPath from "@assets/audio/hiHatClosed.wav";
 
 let audioCtx; // context must be generated after user action
+let bufferLoading = false;
 let bufferLoaded = false;
 
 const audioBuffer = {
@@ -176,16 +177,23 @@ const sequencerQueue = [
 let sequencerQueueIndex = 0;
 
 async function loadBuffer() {
-  if (!bufferLoaded) {
-    bufferLoaded = true;
+  if (!bufferLoaded && !bufferLoading) {
+    bufferLoading = true;
+    const promises = [];
     for (const key in audioBuffer) {
-      const track = audioBuffer[key];
-      if (!track.buffer) {
-        const response = await fetch(track.path);
-        const audioData = await response.arrayBuffer();
-        track.buffer = await audioCtx.decodeAudioData(audioData);
-      }
+      promises.push(fetchAudioFiles(key));
     }
+    await Promise.all(promises);
+    bufferLoaded = true;
+  }
+}
+
+async function fetchAudioFiles(key) {
+  const track = audioBuffer[key];
+  if (!track.buffer) {
+    const response = await fetch(track.path);
+    const audioData = await response.arrayBuffer();
+    return (track.buffer = await audioCtx.decodeAudioData(audioData));
   }
 }
 
