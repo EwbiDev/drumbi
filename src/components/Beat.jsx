@@ -3,7 +3,7 @@ import { PlayContext } from "../App";
 
 import { beatProp, trackIdProp } from "@utilities/propTypes";
 
-export default function Beat({ beat, defaultFile, trackId }) {
+export default function Beat({ beat, defaultFile, trackId, lastNoteTime }) {
   const { playBack, playHeadPos, sequencerData, setSequencerData } =
     useContext(PlayContext);
   const displayPlayHead = playHeadPos === beat.beatId;
@@ -18,6 +18,13 @@ export default function Beat({ beat, defaultFile, trackId }) {
     }
 
     if (displayPlayHead && beat.hit && playBack) {
+      if (trackId === 0) {
+        console.log(
+          "Time since last hihat -",
+          Date.now() - lastNoteTime.current,
+        );
+      }
+      lastNoteTime.current = Date.now();
       audioRef.current.sample.play();
     }
   }, [displayPlayHead, playBack]);
