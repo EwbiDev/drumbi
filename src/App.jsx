@@ -64,11 +64,11 @@ function App() {
         <PlayContext.Provider
           value={{ playBack, playHeadPos, sequencerData, setSequencerData }}
         >
-          <div className="rounded-xl bg-cyan-900 p-4">
+          {/* <div className="rounded-xl bg-cyan-900 p-4">
             {sequencerData.map((track) => (
               <Track key={`track-${track.trackName}`} track={track} />
             ))}
-          </div>
+          </div> */}
         </PlayContext.Provider>
       </main>
     </div>
