@@ -20,7 +20,6 @@ const audioBuffer = {
 };
 
 const lookahead = 0.1;
-let kickBuffer = null;
 
 let startTime = null;
 
