@@ -176,6 +176,7 @@ const sequencerQueue = [
 let sequencerQueueIndex = 0;
 
 async function loadBuffer() {
+  // FIXME: throttling internet speed will result in 100s of file requests
   if (!bufferLoaded) {
     for (const key in audioBuffer) {
       const track = audioBuffer[key];
