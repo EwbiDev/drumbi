@@ -5,20 +5,6 @@
     - Blank PianoRoll
     - `Demo` && `AudioCtx` branches fully committed.
 
-## Why
-
-- I've always enjoyed messing around with music apps:
-
-  - Notation software:
-    - Sibelius by Avid
-    - MuseScore, open-source
-  - DAWs (Digital Audio Workstations):
-    - FL Studio, previously known as FruityLoops
-    - Ableton Live
-    - Apple GarageBand
-
-- Most of the code required will hopefully take place behind the scenes, that means very little CSS required! 😁
-
 ## Built with
 
 - React
@@ -55,3 +41,17 @@
 - What I need to do is let the audio dictate what the ui is doing and not the other way around.
 - Therefore, I need to make use of the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) and using an audio context which will allow me to schedule playBack ahead of time. Which allows more much more intricate rhythms.
   - Load `AudioCtx` branch, and demonstrate trap beat.
+
+## Why (If time)
+
+- I've always enjoyed messing around with music apps:
+
+  - Notation software:
+    - Sibelius by Avid
+    - MuseScore, open-source
+  - DAWs (Digital Audio Workstations):
+    - FL Studio, previously known as FruityLoops
+    - Ableton Live
+    - Apple GarageBand
+
+- Most of the code required will hopefully take place behind the scenes, that means very little CSS required! 😁
