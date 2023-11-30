@@ -1,7 +1,22 @@
 import { getAudioCtx } from "./audioContext";
+
 import kickPath from "@assets/audio/kick.wav";
+import snarePath from "@assets/audio/snare.wav";
+import hiHatClosedPath from "@assets/audio/hiHatClosed.wav";
 
 let audioCtx; // context must be generated after user action
+
+const audioBuffer = {
+  kick: {
+    path: kickPath,
+  },
+  snare: {
+    path: snarePath,
+  },
+  hiHatClosed: {
+    path: hiHatClosedPath,
+  },
+};
 
 const lookahead = 0.1;
 let kickBuffer = null;
@@ -10,30 +25,124 @@ let startTime = null;
 
 let nextNoteTime = null;
 
-const sequencerTimeLength = 0.4085;
+const sequencerTimeLength = 4.4;
+const t = sequencerTimeLength;
 const sequencerQueue = [
   {
     time: 0,
-    path: "", // TODO: set paths in queue
+    audio: "hiHatClosed",
   },
   {
-    time: sequencerTimeLength / 6,
+    time: 0,
+    audio: "kick",
   },
   {
-    time: sequencerTimeLength / 3,
+    time: t / 16,
+    audio: "hiHatClosed",
   },
   {
-    time: (sequencerTimeLength / 3) * 2,
+    time: (t / 16) * 2,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 3,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 4,
+
+    audio: "snare",
+  },
+  {
+    time: (t / 16) * 4,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 5,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 6,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 7,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 8,
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 8,
+    audio: "kick",
+  },
+  {
+    time: (t / 16) * 9,
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 10,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 11,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 12,
+
+    audio: "snare",
+  },
+  {
+    time: (t / 16) * 12,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 13,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 13,
+
+    audio: "kick",
+  },
+  {
+    time: (t / 32) * 27,
+
+    audio: "kick",
+  },
+  {
+    time: (t / 16) * 14,
+
+    audio: "hiHatClosed",
+  },
+  {
+    time: (t / 16) * 15,
+
+    audio: "hiHatClosed",
   },
 ];
 let sequencerQueueIndex = 0;
 
 async function loadBuffer() {
-  // TODO: to parametrize
-  if (!kickBuffer) {
-    const response = await fetch(kickPath);
-    const audioData = await response.arrayBuffer();
-    kickBuffer = await audioCtx.decodeAudioData(audioData);
+  for (const key in audioBuffer) {
+    const track = audioBuffer[key];
+    if (!track.buffer) {
+      const response = await fetch(track.path);
+      const audioData = await response.arrayBuffer();
+      track.buffer = await audioCtx.decodeAudioData(audioData);
+    }
   }
 }
 
@@ -43,14 +152,15 @@ function scheduler() {
   setStartTime();
 
   while (nextNoteTime < audioCtx.currentTime + lookahead) {
-    scheduleNote(nextNoteTime);
+    const nextAudio = sequencerQueue[sequencerQueueIndex].audio;
+    scheduleNote(nextNoteTime, audioBuffer[nextAudio].buffer);
     setNextNote();
   }
 }
 
-async function scheduleNote(time) {
+async function scheduleNote(time, buffer) {
   const source = audioCtx.createBufferSource();
-  source.buffer = kickBuffer;
+  source.buffer = buffer;
   source.connect(audioCtx.destination);
 
   source.start(time);
