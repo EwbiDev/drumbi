@@ -42,7 +42,7 @@ function trackScaffold(barNum, beatsPerBar) {
 
   const scaffold = [
     {
-      trackName: "hi hat",
+      trackName: "hiHatClosed",
       defaultFile: hiHatClosed,
     },
     {
