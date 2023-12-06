@@ -4,15 +4,11 @@ import Track from "./components/Track";
 import { trackScaffold } from "@utilities/audio";
 import PlayBackControls from "./components/PlayBackControls";
 
-import {
-  startSchedulerInterval,
-  stopSchedulerInterval,
-} from "@utilities/schedulerInterval";
-
 const PlayContext = createContext(0);
 
 import {
-  sequencerQueueIndex,
+  clearScheduler,
+  scheduler,
   sequencerBpm,
   setSequencerBpm,
 } from "@utilities/scheduler";
@@ -25,15 +21,30 @@ function loadData() {
   return trackScaffold(1, 4);
 }
 
+const interval = 25; // milliseconds
+let intervalId = null;
+
+function stopSchedulerInterval() {
+  clearInterval(intervalId);
+  clearScheduler();
+}
+
 function App() {
   const [sequencerData, setSequencerData] = useState(loadData());
 
   const [playBack, setPlayBack] = useState(false);
-  const [playHeadPos, setPlayHeadPos] = useState(sequencerQueueIndex);
+  const [playHeadPos, setPlayHeadPos] = useState(0);
 
   const [bpm, setBpm] = useState(sequencerBpm);
 
   useEffect(() => {
+    function startSchedulerInterval() {
+      intervalId = setInterval(() => {
+        const queueIndex = scheduler();
+        setPlayHeadPos(queueIndex);
+      }, interval);
+    }
+
     if (playBack) {
       startSchedulerInterval();
     } else {

@@ -93,6 +93,7 @@ function scheduler() {
 
     setNextNote();
   }
+  return (sequencerQueueIndex + beatCount - 1) % beatCount;
 }
 
 async function scheduleNote(time, buffer) {
