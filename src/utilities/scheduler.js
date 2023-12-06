@@ -26,9 +26,9 @@ let startTime = null;
 
 let nextBeatTime = null;
 
-const bpm = 120;
+let sequencerBpm = 120;
 const beatCount = 4;
-const sequencerTimeLength = (60 / bpm) * beatCount;
+let sequencerTimeLength = (60 / sequencerBpm) * beatCount;
 
 const sequencerQueue = [
   {
@@ -41,11 +41,11 @@ const sequencerQueue = [
   },
   {
     time: (sequencerTimeLength / 4) * 2,
-    subBeats: [["hiHatClosed", "snare"], [], ["kick"], ["snare"]],
+    subBeats: [["hiHatClosed", "snare"]],
   },
   {
     time: (sequencerTimeLength / 4) * 3,
-    subBeats: [["hiHatClosed"], [], ["snare"], ["kick"], ["kick"]],
+    subBeats: [["hiHatClosed"]],
   },
 ];
 let sequencerQueueIndex = 0;
@@ -104,18 +104,9 @@ async function scheduleNote(time, buffer) {
 }
 
 function setNextNote() {
-  const curQIdx = sequencerQueueIndex;
-  const nextQIdx = (sequencerQueueIndex =
-    (sequencerQueueIndex + 1) % sequencerQueue.length);
+  nextBeatTime += 60 / sequencerBpm;
 
-  const prevTime = sequencerQueue[curQIdx].time;
-  const nextTime = sequencerQueue[nextQIdx].time;
-
-  if (nextQIdx === 0) {
-    nextBeatTime += sequencerTimeLength - prevTime;
-  } else {
-    nextBeatTime += nextTime - prevTime;
-  }
+  sequencerQueueIndex = (sequencerQueueIndex + 1) % sequencerQueue.length;
 }
 
 function setStartTime() {
@@ -137,4 +128,15 @@ function clearScheduler() {
   clearSequencer();
 }
 
-export { clearScheduler, scheduler, sequencerQueueIndex };
+function setSequencerBpm(bpm) {
+  sequencerBpm = bpm;
+  sequencerTimeLength = (60 / sequencerBpm) * beatCount;
+}
+
+export {
+  clearScheduler,
+  scheduler,
+  sequencerQueueIndex,
+  setSequencerBpm,
+  sequencerBpm,
+};
