@@ -1,7 +1,7 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import "./App.css";
 import Track from "./components/Track";
-import { trackScaffold } from "@utilities/audio";
+import { trackScaffold, generateQueue } from "@utilities/audio";
 import PlayBackControls from "./components/PlayBackControls";
 
 const PlayContext = createContext(0);
@@ -11,6 +11,7 @@ import {
   scheduler,
   sequencerBpm,
   setSequencerBpm,
+  setSequencerQueue,
 } from "@utilities/scheduler";
 
 function loadData() {
@@ -30,12 +31,13 @@ function stopSchedulerInterval() {
 }
 
 function App() {
-  const [sequencerData, setSequencerData] = useState(loadData());
+  const [sequencerData, setSequencerData] = useState(loadData);
 
   const [playBack, setPlayBack] = useState(false);
   const [playHeadPos, setPlayHeadPos] = useState(0);
 
   const [bpm, setBpm] = useState(sequencerBpm);
+  const [beatCount, setBeatCount] = useState(4);
 
   useEffect(() => {
     function startSchedulerInterval() {
@@ -55,6 +57,10 @@ function App() {
   useEffect(() => {
     setSequencerBpm(bpm);
   }, [bpm]);
+
+  useEffect(() => {
+    setSequencerQueue(generateQueue(sequencerData, beatCount));
+  }, [sequencerData, beatCount]);
 
   return (
     <div className="flex h-screen w-screen items-center justify-center">

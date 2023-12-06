@@ -121,10 +121,17 @@ function setSequencerBpm(bpm) {
   sequencerTimeLength = (60 / sequencerBpm) * beatCount;
 }
 
+function setSequencerQueue(queue) {
+  queue.forEach((beat, beatIdx) => {
+    sequencerQueue[beatIdx] = beat;
+  });
+}
+
 export {
   clearScheduler,
   scheduler,
   sequencerQueueIndex,
   setSequencerBpm,
+  setSequencerQueue,
   sequencerBpm,
 };
