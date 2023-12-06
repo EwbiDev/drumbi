@@ -24,38 +24,27 @@ const lookahead = 0.1;
 
 let startTime = null;
 
-let nextNoteTime = null;
+let nextBeatTime = null;
 
 const sequencerTimeLength = 2.2;
-const t = sequencerTimeLength;
+const beatCount = 4;
+
 const sequencerQueue = [
   {
     time: 0,
-    audio: "hiHatClosed",
+    subBeats: [["hiHatClosed", "kick"]],
   },
   {
-    time: 0,
-    audio: "kick",
+    time: (sequencerTimeLength / 4) * 1,
+    subBeats: [["hiHatClosed"]],
   },
   {
-    time: (t / 4) * 1,
-
-    audio: "hiHatClosed",
+    time: (sequencerTimeLength / 4) * 2,
+    subBeats: [["hiHatClosed", "snare"], [], ["kick"], ["snare"]],
   },
   {
-    time: (t / 4) * 2,
-
-    audio: "snare",
-  },
-  {
-    time: (t / 4) * 2,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 4) * 3,
-
-    audio: "hiHatClosed",
+    time: (sequencerTimeLength / 4) * 3,
+    subBeats: [["hiHatClosed"], [], ["snare"], ["kick"], ["kick"]],
   },
 ];
 let sequencerQueueIndex = 0;
@@ -89,9 +78,18 @@ function scheduler() {
 
   setStartTime();
 
-  while (nextNoteTime < audioCtx.currentTime + lookahead) {
-    const nextAudio = sequencerQueue[sequencerQueueIndex].audio;
-    scheduleNote(nextNoteTime, audioBuffer[nextAudio].buffer);
+  while (nextBeatTime < audioCtx.currentTime + lookahead) {
+    const nextBeat = sequencerQueue[sequencerQueueIndex];
+    const subBeatLength =
+      sequencerTimeLength / beatCount / nextBeat.subBeats.length;
+
+    nextBeat.subBeats.forEach((subBeat, subBeatIdx) => {
+      const subBeatTime = nextBeatTime + subBeatLength * subBeatIdx;
+      subBeat.forEach((note) => {
+        scheduleNote(subBeatTime, audioBuffer[note].buffer);
+      });
+    });
+
     setNextNote();
   }
 }
@@ -113,15 +111,15 @@ function setNextNote() {
   const nextTime = sequencerQueue[nextQIdx].time;
 
   if (nextQIdx === 0) {
-    nextNoteTime += sequencerTimeLength - prevTime;
+    nextBeatTime += sequencerTimeLength - prevTime;
   } else {
-    nextNoteTime += nextTime - prevTime;
+    nextBeatTime += nextTime - prevTime;
   }
 }
 
 function setStartTime() {
   if (!startTime) {
-    nextNoteTime = startTime = audioCtx.currentTime + lookahead;
+    nextBeatTime = startTime = audioCtx.currentTime + lookahead;
   }
 }
 
