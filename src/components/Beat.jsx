@@ -16,10 +16,6 @@ export default function Beat({ beat, defaultFile, trackId }) {
 
       audioRef.current = { sample };
     }
-
-    if (displayPlayHead && beat.hit && playBack) {
-      audioRef.current.sample.play();
-    }
   }, [displayPlayHead, playBack]);
 
   function handleChange(e) {
