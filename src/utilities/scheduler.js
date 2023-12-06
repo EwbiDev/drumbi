@@ -26,8 +26,9 @@ let startTime = null;
 
 let nextBeatTime = null;
 
-const sequencerTimeLength = 2.2;
+const bpm = 120;
 const beatCount = 4;
+const sequencerTimeLength = (60 / bpm) * beatCount;
 
 const sequencerQueue = [
   {
@@ -136,4 +137,4 @@ function clearScheduler() {
   clearSequencer();
 }
 
-export { clearScheduler, scheduler };
+export { clearScheduler, scheduler, sequencerQueueIndex };
