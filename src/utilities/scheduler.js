@@ -26,7 +26,7 @@ let startTime = null;
 
 let nextNoteTime = null;
 
-const sequencerTimeLength = 4.4;
+const sequencerTimeLength = 2.2;
 const t = sequencerTimeLength;
 const sequencerQueue = [
   {
@@ -38,138 +38,22 @@ const sequencerQueue = [
     audio: "kick",
   },
   {
-    time: t / 16,
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 2,
+    time: (t / 4) * 1,
 
     audio: "hiHatClosed",
   },
   {
-    time: (t / 16) * 3,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 4,
+    time: (t / 4) * 2,
 
     audio: "snare",
   },
   {
-    time: (t / 16) * 4,
+    time: (t / 4) * 2,
 
     audio: "hiHatClosed",
   },
   {
-    time: (t / 16) * 5,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 48) * 18,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 48) * 20,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 48) * 22,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 8,
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 8,
-    audio: "kick",
-  },
-  {
-    time: (t / 16) * 9,
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 10,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 11,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 12,
-
-    audio: "snare",
-  },
-  {
-    time: (t / 16) * 12,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 13,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 13,
-
-    audio: "kick",
-  },
-  {
-    time: (t / 32) * 27,
-
-    audio: "kick",
-  },
-  {
-    time: (t / 128) * 112,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 128) * 113,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 128) * 114,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 128) * 115,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 128) * 116,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 128) * 117,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 128) * 118,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 128) * 119,
-
-    audio: "hiHatClosed",
-  },
-  {
-    time: (t / 16) * 15,
+    time: (t / 4) * 3,
 
     audio: "hiHatClosed",
   },
