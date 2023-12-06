@@ -32,19 +32,15 @@ let sequencerTimeLength = (60 / sequencerBpm) * beatCount;
 
 const sequencerQueue = [
   {
-    time: 0,
     subBeats: [["hiHatClosed", "kick"]],
   },
   {
-    time: (sequencerTimeLength / 4) * 1,
     subBeats: [["hiHatClosed"]],
   },
   {
-    time: (sequencerTimeLength / 4) * 2,
     subBeats: [["hiHatClosed", "snare"]],
   },
   {
-    time: (sequencerTimeLength / 4) * 3,
     subBeats: [["hiHatClosed"]],
   },
 ];
