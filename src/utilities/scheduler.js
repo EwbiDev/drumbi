@@ -31,18 +31,10 @@ const beatCount = 4;
 let sequencerTimeLength = (60 / sequencerBpm) * beatCount;
 
 const sequencerQueue = [
-  {
-    subBeats: [["hiHatClosed", "kick"]],
-  },
-  {
-    subBeats: [["hiHatClosed"]],
-  },
-  {
-    subBeats: [["hiHatClosed", "snare"]],
-  },
-  {
-    subBeats: [["hiHatClosed"]],
-  },
+  [["hiHatClosed", "kick"]],
+  [["hiHatClosed"]],
+  [["hiHatClosed", "snare"]],
+  [["hiHatClosed"]],
 ];
 let sequencerQueueIndex = 0;
 
@@ -77,10 +69,9 @@ function scheduler() {
 
   while (nextBeatTime < audioCtx.currentTime + lookahead) {
     const nextBeat = sequencerQueue[sequencerQueueIndex];
-    const subBeatLength =
-      sequencerTimeLength / beatCount / nextBeat.subBeats.length;
+    const subBeatLength = sequencerTimeLength / beatCount / nextBeat.length;
 
-    nextBeat.subBeats.forEach((subBeat, subBeatIdx) => {
+    nextBeat.forEach((subBeat, subBeatIdx) => {
       const subBeatTime = nextBeatTime + subBeatLength * subBeatIdx;
       subBeat.forEach((note) => {
         scheduleNote(subBeatTime, audioBuffer[note].buffer);
