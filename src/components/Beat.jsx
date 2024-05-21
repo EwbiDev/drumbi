@@ -1,8 +1,6 @@
 import { useContext, useEffect, useRef } from "react";
 import { PlayContext } from "../App";
 
-import { beatProp, trackIdProp } from "@utilities/propTypes";
-
 export default function Beat({ beat, defaultFile, trackId }) {
   const { playBack, playHeadPos, sequencerData, setSequencerData } =
     useContext(PlayContext);
@@ -15,10 +13,6 @@ export default function Beat({ beat, defaultFile, trackId }) {
       const sample = new Audio(defaultFile);
 
       audioRef.current = { sample };
-    }
-
-    if (displayPlayHead && beat.hit && playBack) {
-      audioRef.current.sample.play();
     }
   }, [displayPlayHead, playBack]);
 
@@ -45,7 +39,3 @@ export default function Beat({ beat, defaultFile, trackId }) {
     </div>
   );
 }
-
-Beat.propTypes = {
-  beat: beatProp,
-};

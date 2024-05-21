@@ -42,7 +42,7 @@ function trackScaffold(barNum, beatsPerBar) {
 
   const scaffold = [
     {
-      trackName: "hi hat",
+      trackName: "hiHatClosed",
       defaultFile: hiHatClosed,
     },
     {
@@ -64,4 +64,20 @@ function trackScaffold(barNum, beatsPerBar) {
   });
 }
 
-export { playSound, trackScaffold };
+function generateQueue(sequencerData, beatCount) {
+  const queue = [];
+  for (let i = 0; i < beatCount; i++) {
+    queue.push([[]]);
+  }
+
+  sequencerData.forEach((track) => {
+    track.beats.forEach((beat, beatIdx) => {
+      if (beat.hit) {
+        queue[beatIdx][0].push(track.trackName);
+      }
+    });
+  });
+  return queue;
+}
+
+export { playSound, generateQueue, trackScaffold };

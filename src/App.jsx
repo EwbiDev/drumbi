@@ -1,12 +1,18 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import "./App.css";
 import Track from "./components/Track";
-import { calcBeatInterval } from "@utilities/bpm";
-import { nextPlayHeadPos } from "@utilities/playHead";
-import { trackScaffold } from "@utilities/audio";
+import { trackScaffold, generateQueue } from "@utilities/audio";
 import PlayBackControls from "./components/PlayBackControls";
 
 const PlayContext = createContext(0);
+
+import {
+  clearScheduler,
+  scheduler,
+  sequencerBpm,
+  setSequencerBpm,
+  setSequencerQueue,
+} from "@utilities/scheduler";
 
 function loadData() {
   const savedSequencerData = localStorage.getItem("sequencerData");
@@ -16,38 +22,45 @@ function loadData() {
   return trackScaffold(4, 4);
 }
 
+const interval = 25; // milliseconds
+let intervalId = null;
+
+function stopSchedulerInterval() {
+  clearInterval(intervalId);
+  clearScheduler();
+}
+
 function App() {
-  const [sequencerData, setSequencerData] = useState(loadData());
+  const [sequencerData, setSequencerData] = useState(loadData);
 
   const [playBack, setPlayBack] = useState(false);
   const [playHeadPos, setPlayHeadPos] = useState(0);
-  const playHeadInterval = useRef();
 
-  const [barNum, setBarNum] = useState(4);
-  const [beatsPerBar, setBeatsPerBar] = useState(4);
-  const [bpm, setBpm] = useState(180);
-
-  const totalBeatNum = barNum * beatsPerBar;
+  const [bpm, setBpm] = useState(sequencerBpm);
+  const [beatCount] = useState(16);
 
   useEffect(() => {
-    // clear any previous intervals while live-editing...
-    return () => clearInterval(playHeadInterval.current);
-  }, []);
-
-  useEffect(() => {
-    clearInterval(playHeadInterval.current);
-    if (playBack) {
-      playHeadInterval.current = setInterval(() => {
-        setPlayHeadPos((playHeadPos) =>
-          nextPlayHeadPos(playHeadPos, totalBeatNum),
-        );
-      }, calcBeatInterval(bpm));
+    function startSchedulerInterval() {
+      intervalId = setInterval(() => {
+        const queueIndex = scheduler();
+        setPlayHeadPos(queueIndex);
+      }, interval);
     }
-  }, [playBack, bpm]);
+
+    if (playBack) {
+      startSchedulerInterval();
+    } else {
+      stopSchedulerInterval();
+    }
+  }, [playBack]);
 
   useEffect(() => {
-    localStorage.setItem("sequencerData", JSON.stringify(sequencerData));
-  }, [sequencerData]);
+    setSequencerBpm(bpm);
+  }, [bpm]);
+
+  useEffect(() => {
+    setSequencerQueue(generateQueue(sequencerData, beatCount));
+  }, [sequencerData, beatCount]);
 
   return (
     <div className="flex h-screen w-screen items-center justify-center">
