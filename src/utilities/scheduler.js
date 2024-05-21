@@ -27,7 +27,7 @@ let startTime = null;
 let nextBeatTime = null;
 
 let sequencerBpm = 120;
-const beatCount = 4;
+const beatCount = 16;
 let sequencerTimeLength = (60 / sequencerBpm) * beatCount;
 
 const sequencerQueue = [

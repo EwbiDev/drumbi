@@ -19,7 +19,7 @@ function loadData() {
   if (savedSequencerData) {
     return JSON.parse(savedSequencerData);
   }
-  return trackScaffold(1, 4);
+  return trackScaffold(4, 4);
 }
 
 const interval = 25; // milliseconds
@@ -37,7 +37,7 @@ function App() {
   const [playHeadPos, setPlayHeadPos] = useState(0);
 
   const [bpm, setBpm] = useState(sequencerBpm);
-  const [beatCount, setBeatCount] = useState(4);
+  const [beatCount] = useState(16);
 
   useEffect(() => {
     function startSchedulerInterval() {
