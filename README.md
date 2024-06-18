@@ -4,6 +4,12 @@
 
 Drumbi is a web application that leverages the Web Audio API to create and manipulate audio contexts. This project was made to explore the usage of AudioContext to schedule audio playback.
 
+## Live Demo
+
+A live demo can be found hosted on [GitHub Pages](https://ewbidev.github.io/drumbi/).
+
+![Drumbi Demo](/drumbiDemo.gif)
+
 ## Installation
 
 To install and run this project locally, follow these steps:
